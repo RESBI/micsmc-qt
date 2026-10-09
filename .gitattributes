@@ -1,0 +1,15 @@
+# 统一使用 LF：源码跨平台，避免 CRLF 混入
+* text=auto eol=lf
+
+# 二进制资源不做行尾转换
+*.png binary
+*.jpg binary
+*.ico binary
+*.svg text eol=lf
+
+# 构建脚本 / 配置文件
+*.cmake text eol=lf
+CMakeLists.txt text eol=lf
+*.qss text eol=lf
+*.desktop text eol=lf
+*.md text eol=lf

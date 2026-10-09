@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Xeon Phi Control Panel
+Name[zh_CN]=Xeon Phi 控制面板
+Comment=Monitor Intel Xeon Phi (KNC) coprocessors
+Comment[zh_CN]=监控 Intel Xeon Phi (KNC) 协处理器
+Exec=micsmc-qt
+Terminal=false
+Categories=System;Monitor;Utility;
+Keywords=xeon;phi;mic;mpss;monitor;
+StartupNotify=false

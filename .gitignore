@@ -1,0 +1,34 @@
+# 构建产物
+build/
+*.o
+*.so
+*.a
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+*.cmake.user
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.user
+*.kate-swp
+*.swp
+*~
+
+# 操作系统杂物
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.log
+*.orig
+*.rej
+*.bak

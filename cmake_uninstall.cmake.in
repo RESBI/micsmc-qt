@@ -1,0 +1,55 @@
+# cmake_uninstall.cmake.in — make uninstall 的卸载脚本
+#
+# 设计要点（对应"核对卸载路径"的要求）：
+#  1) 路径来源是 install_manifest.txt —— 这是 install 当时写下的**真实绝对路径**，
+#     所以即使安装时用 `cmake --install . --prefix /opt/xxx` 覆盖了前缀，
+#     卸载也不会按配置期前缀删错位置。
+#  2) 安全闸：只允许删除本项目的产物（micsmc-qt / micsmc-qt.desktop）。
+#     manifest 若被篡改或混入别的条目，会跳过并告警，绝不误删系统文件。
+#  3) 只删文件，不用 REMOVE_RECURSE —— 避免误删 /usr/bin、/usr/share/applications
+#     这类共享目录（它们可能还装着别的程序）。空目录留给用户自行清理。
+#  4) 支持 $DESTDIR（打包/暂存安装场景）。
+
+set(_manifest "@CMAKE_BINARY_DIR@/install_manifest.txt")
+
+if(NOT EXISTS "${_manifest}")
+    message(FATAL_ERROR
+        "找不到安装清单 ${_manifest}\n"
+        "请先在本构建目录执行过 `make install`（或在别处安装）再卸载。")
+endif()
+
+file(READ "${_manifest}" _file_list)
+# 逐行拆成列表；去掉空行与首尾空白
+string(REPLACE "\n" ";" _file_list "${_file_list}")
+
+set(_removed 0)
+set(_missing 0)
+set(_skipped 0)
+
+foreach(_f ${_file_list})
+    string(STRIP "${_f}" _f)
+    if(_f STREQUAL "")
+        continue()
+    endif()
+
+    # --- 安全闸：只删本项目文件 ---
+    get_filename_component(_base "${_f}" NAME)
+    if(NOT (_base STREQUAL "micsmc-qt" OR _base STREQUAL "micsmc-qt.desktop"))
+        message(WARNING "跳过非本项目条目（未删除）: ${_f}")
+        math(EXPR _skipped "${_skipped}+1")
+        continue()
+    endif()
+
+    set(_target "$ENV{DESTDIR}${_f}")
+    if(EXISTS "${_target}" OR IS_SYMLINK "${_target}")
+        file(REMOVE "${_target}")
+        message(STATUS "已删除: ${_target}")
+        math(EXPR _removed "${_removed}+1")
+    else()
+        message(STATUS "不存在，跳过: ${_target}")
+        math(EXPR _missing "${_missing}+1")
+    endif()
+endforeach()
+
+message(STATUS "卸载完成：删除 ${_removed} 个，缺失 ${_missing} 个，安全跳过 ${_skipped} 个")
+message(STATUS "注：共享目录（如 bin/、share/applications/）不做删除，避免影响其他程序。")

@@ -1,0 +1,206 @@
+/* original.qss — 控制面板默认亮色主题（Qt6）
+ *
+ * 复刻 MPSS 控制面板的观感：Intel 蓝渐变主窗口、白/灰面板、等宽粗体文字。
+ * 字体: 等宽粗体（Courier New 系），与面板观感一致。
+ * 配色: 面板底色 rgb(225,225,225)、NavBar 灰条 rgb(235,235,235)、
+ *       文字与坐标轴 #0860A8、主窗口渐变 #0071C5 → #0860A8。
+ */
+
+/* general —— 字体只作用于具体控件类型，避免覆盖程序化 setFont */
+QLabel, QPushButton, QMenu, QComboBox, QCheckBox, QRadioButton,
+QMenu::item, QTableWidget, QHeaderView::section, QStatusBar {
+    color:  #0860A8;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* NavBar 条：满宽灰条 rgb(235,235,235)，其上下为蓝色窗口底色 */
+QWidget#NavBar {
+    background-color: rgb(235, 235, 235);
+}
+
+QToolButton {
+    background: rgb(235, 235, 235);
+    color: #0860A8;
+    border: 1px solid #9AA7B4;
+    border-radius: 2px;
+    padding: 1px 10px;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+QToolButton:hover { background: #F6F6F6; }
+QToolButton::menu-indicator { image: none; }
+
+/* NavBar 右侧计数字段（灰条上的深蓝粗体） */
+QLabel#ToolbarField {
+    color: #0B3F73;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* 字段值文本（原版 "Total Memory: %1" 等） */
+QLabel#FieldValue {
+    color: #0860A8;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 9px;
+    background: transparent;
+}
+
+QMenu {
+    border: 1px solid black;
+}
+
+QMenuBar {
+    background: #FFFFFF;
+    color: #0860A8;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-size: 11px;
+}
+QMenuBar::item:selected {
+    background: #18a0e8;
+    color: #FFFFFF;
+}
+
+QMenu::item:selected {
+    background-color: #18a0e8;
+}
+
+QPushButton::checked {
+    background-color: #18a0e8;
+}
+
+QProgressBar {
+    background: #FFFFFF;
+    text-align: top;
+    border: 1px solid #0860A8;
+}
+
+QProgressBar::chunk {
+    background-color: #0860A8;
+}
+
+QMainWindow {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #0071C5, stop:1 #0860A8);
+}
+
+/* ---- 图表类控件为自绘（QPainter），以下为其等效外观 ---- */
+
+QLabel#CardViewTitle {
+    color: #FFFFFF;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+QFrame#DataPanel {
+    background: rgb(225, 225, 225);   /* 面板统一底色，无边框 */
+    border: none;
+}
+
+QFrame#DataPanel QLabel {
+    color: #0860A8;
+    background: transparent;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+QFrame#DataPanel QTableWidget {
+    background: #FFFFFF;
+    color: #0860A8;
+    gridline-color: #b0d0e8;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+QGroupBox {
+    background: rgba(255, 255, 255, 235);
+    border: 1px solid #0860A8;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+    color: #0860A8;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 8px;
+    padding: 0 4px;
+}
+
+QComboBox {
+    background: #FFFFFF;
+    color: #0860A8;
+    border: 1px solid #0860A8;
+    border-radius: 3px;
+    padding: 2px 18px 2px 6px;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+QComboBox QAbstractItemView {
+    background: #FFFFFF;
+    color: #0860A8;
+    selection-background-color: #18a0e8;
+    selection-color: #FFFFFF;
+}
+
+QPushButton {
+    background: #FFFFFF;
+    color: #0860A8;
+    border: 1px solid #0860A8;
+    border-radius: 3px;
+    padding: 1px 8px;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+QPushButton:hover {
+    background: #d8ecfa;
+}
+QPushButton:pressed {
+    background: #18a0e8;
+    color: #FFFFFF;
+}
+
+QTableWidget {
+    background: #FFFFFF;
+    color: #0860A8;
+    gridline-color: #b0d0e8;
+}
+QHeaderView::section {
+    background: #e8f2fb;
+    color: #0860A8;
+    border: none;
+    border-bottom: 1px solid #0860A8;
+    padding: 3px 6px;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+QStatusBar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #2F6CBA, stop:1 #2C64AE);
+    color: #FFFFFF;
+}
+QStatusBar QLabel {
+    color: #FFFFFF;
+    font-family: "Courier New", "Liberation Mono", "DejaVu Sans Mono", monospace;
+    font-weight: bold;
+}
+
+QScrollBar:vertical {
+    background: #e8f2fb; width: 12px; margin: 0;
+}
+QScrollBar::handle:vertical {
+    background: #0860A8; border-radius: 5px; min-height: 28px;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
